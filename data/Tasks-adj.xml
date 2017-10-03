@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<tasks>
+  <task>
+    <id>4</id>
+    <title>Steady</title>
+    <weight>5</weight>
+    <parent>-1</parent>
+  </task>
+  <task>
+    <id>3</id>
+    <title>Ready</title>
+    <weight>5</weight>
+    <parent>-1</parent>
+  </task>
+  <task>
+    <id>5</id>
+    <title>Go</title>
+    <weight>5</weight>
+    <parent>-1</parent>
+  </task>
+  <task>
+    <id>2</id>
+    <title>Dress</title>
+    <weight>9</weight>
+    <parent>0</parent>
+  </task>
+  <task>
+    <id>1</id>
+    <title>Alarm Clock</title>
+    <weight>9</weight>
+    <parent>0</parent>
+  </task>
+  <task>
+    <id>0</id>
+    <title>Morning</title>
+    <weight>9</weight>
+    <parent>-1</parent>
+  </task>
+</tasks>

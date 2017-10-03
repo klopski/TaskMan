@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sorts>
+  <sort>
+    <property>id</property>
+    <direction>Asc</direction>
+  </sort>
+  <sort>
+    <property>weight</property>
+    <direction>Dsc</direction>
+  </sort>
+  <sort>
+    <property>title</property>
+    <direction>Dsc</direction>
+  </sort>
+</sorts>

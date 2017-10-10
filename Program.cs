@@ -20,7 +20,7 @@ namespace TaskManager
 	class Program
 	{
 		public static string DataDir = "../../data/";
-		// for running from IDE only. Replace with "." for release!
+		//TODO for running from IDE only. Replace with "." for release!
 								
 		public static void Main(string[] args)
 		{

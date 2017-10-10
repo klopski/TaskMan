@@ -125,7 +125,7 @@ namespace TaskManager
 			// Добавляем в корень
 			xRoot.AppendChild(NewTask);
 			
-			xDoc.Save("Tasks-mod.xml");
+			xDoc.Save(Program.DataDir + "Tasks-mod.xml");
 		}
 		
 		public static void ChangeTask(List <Task> tasks, int id, string whichParam, object newValue)

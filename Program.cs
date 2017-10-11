@@ -25,16 +25,18 @@ namespace TaskManager
 		public static void Main(string[] args)
 		{
 			// loading tasks
-			List <Task> tasks = Task.LoadTasks();
+			List <Task> tasks = Task.GetTasks();
 			Console.WriteLine("Total of {0} tasks", tasks.Count);
 			foreach (Task a in tasks)
 				Console.WriteLine("ID: {0}, Title: {1}, Weight: {2}, Parent: {3}", a.id, a.title, a.weight, a.parent);
 
 			Console.WriteLine("-- Changing Task");
-			Task.ChangeTask(tasks, 1, "title", "Alarm Clock");
+			Task.ChangeTask(1, "title", "Alarm Clock");
+			Task.WriteTasks("Tasks-add.xml");
 	        
 			Console.WriteLine("-- Adding Task");
-			Task.AddTask(tasks, 6, "Have fun", 10, -1);
+			Task.AddTask(6, "Have fun", 10, -1);
+			Task.WriteTasks("Tasks-adj.xml");
 	        
 // Разбираем порядок сортировки
 			Sort[] sort = Sort.LoadSorts();

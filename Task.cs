@@ -25,19 +25,20 @@ namespace TaskManager
 		public int weight { get; set; }
 		public int parent { get; set; }
 
-		public static List<Task> LoadTasks()
+		private static List <Task> allTasks = null;
+		
+		public static List <Task> LoadTasks(string fileName = "Tasks.xml")
 		{
 			List <Task> tasks = new List <Task>();
-			
-			XmlDocument xDoc0 = new XmlDocument();
-			xDoc0.Load(Program.DataDir + "Tasks.xml");
-	        // получим корневой элемент
-	        XmlElement xRoot0 = xDoc0.DocumentElement;
-	        // обход всех узлов в корневом элементе
-	        foreach(XmlNode xnode in xRoot0)
-	        {
-	        	Task task = new Task();
-	        	// получаем атрибут name
+			try {
+				XmlDocument xDoc0 = new XmlDocument();
+				xDoc0.Load(Program.DataDir + fileName);
+				// получим корневой элемент
+				XmlElement xRoot0 = xDoc0.DocumentElement;
+				// обход всех узлов в корневом элементе
+				foreach (XmlNode xnode in xRoot0) {
+					Task task = new Task();
+					// получаем атрибут name
 /*	            if(xnode.Attributes.Count>0)
 	            {
 	                XmlNode attr = xnode.Attributes.GetNamedItem("id");
@@ -45,42 +46,102 @@ namespace TaskManager
 	                    Console.WriteLine(attr.Value);
 	            }
 */	            // обходим все дочерние узлы элемента user
-	            foreach(XmlNode childnode in xnode.ChildNodes)
-	            {
-	            	// если узел - id
-	                if(childnode.Name == "id")
-	                {
-	                    Console.WriteLine("ID: {0}", childnode.InnerText);
-	                    task.id = Int32.Parse(childnode.InnerText);
-	                }
+					foreach (XmlNode childnode in xnode.ChildNodes) {
+						// если узел - id
+						if (childnode.Name == "id") {
+							Console.WriteLine("ID: {0}", childnode.InnerText);
+							task.id = Int32.Parse(childnode.InnerText);
+						}
 	            	
-	                // если узел - title
-	                if(childnode.Name == "title")
-	                {
-	                    Console.WriteLine("Название: {0}", childnode.InnerText);
-	                    task.title = childnode.InnerText;
-	                }
+						// если узел - title
+						if (childnode.Name == "title") {
+							Console.WriteLine("Название: {0}", childnode.InnerText);
+							task.title = childnode.InnerText;
+						}
 	                
-	                // если узел - weight
-	                if (childnode.Name == "weight")
-	                {
-	                    Console.WriteLine("Вес: {0}", childnode.InnerText);
-	                    task.weight = Int32.Parse(childnode.InnerText);
-	                }
+						// если узел - weight
+						if (childnode.Name == "weight") {
+							Console.WriteLine("Вес: {0}", childnode.InnerText);
+							task.weight = Int32.Parse(childnode.InnerText);
+						}
 	                
-	                // если узел - parent
-	                if(childnode.Name == "parent")
-	                {
-	                    Console.WriteLine("Parent: {0}", childnode.InnerText);
-	                    task.parent = Int32.Parse(childnode.InnerText);
-	                }
-	            }
-	            tasks.Add(task);
-	        }
-	        return tasks;
+						// если узел - parent
+						if (childnode.Name == "parent") {
+							Console.WriteLine("Parent: {0}", childnode.InnerText);
+							task.parent = Int32.Parse(childnode.InnerText);
+						}
+					}
+					tasks.Add(task);
+				}
+				// all good
+				return tasks;
+			} catch (Exception e) {
+				Console.WriteLine("ERROR while loading tasks: '{0}'", e);
+				return null;
+			}
 		}
 	
-		public static void AddTask(List <Task> tasks, int id, string title, int weight, int parent)
+		public static bool WriteTasks(string fileName = "Tasks.xml")
+		{
+			try {
+				// write into new XML file
+				XmlDocument xDoc = new XmlDocument();
+				XmlNode xRoot = xDoc.CreateElement("tasks");
+				xDoc.AppendChild(xRoot);
+				
+				foreach (Task task in allTasks) {
+            		            	
+					XmlElement NewTask = xDoc.CreateElement("task");
+			
+					// Создаём элементы
+					XmlElement ElemId = xDoc.CreateElement("id");
+					XmlElement ElemTitle = xDoc.CreateElement("title");
+					XmlElement ElemWeight = xDoc.CreateElement("weight");
+					XmlElement ElemParent = xDoc.CreateElement("parent");
+			
+					// Создаём текстовые значения
+					XmlText IdText = xDoc.CreateTextNode(task.id.ToString());
+					XmlText TitleText = xDoc.CreateTextNode(task.title);
+					XmlText WeightText = xDoc.CreateTextNode(task.weight.ToString());
+					XmlText ParentText = xDoc.CreateTextNode(task.parent.ToString());
+			
+					// Добавляем узлы
+					ElemId.AppendChild(IdText);
+					ElemTitle.AppendChild(TitleText);
+					ElemWeight.AppendChild(WeightText);
+					ElemParent.AppendChild(ParentText);
+			
+					// Добавляем элементы
+					NewTask.AppendChild(ElemId);
+					NewTask.AppendChild(ElemTitle);
+					NewTask.AppendChild(ElemWeight);
+					NewTask.AppendChild(ElemParent);
+			
+					// Добавляем в корень
+					xRoot.AppendChild(NewTask);
+				}
+				
+				xDoc.Save(Program.DataDir + fileName);
+				
+				// all good
+				return true;
+			} catch (Exception e) {
+				Console.WriteLine("ERROR while saving tasks: '{0}'", e);
+				return false;
+			}			
+		}
+		
+		public static List <Task> GetTasks()
+		{
+			if(allTasks == null)
+			{
+				// no tasks yet, trye to load them first
+				allTasks = LoadTasks();
+			}
+			return allTasks;
+		}
+		
+		public static Task AddTask(int id, string title, int weight, int parent)
 		{
 			// add to collection
 			Task task = new Task();
@@ -88,82 +149,33 @@ namespace TaskManager
 			task.title = title;
 			task.weight = weight;
 			task.parent = parent;
-			tasks.Add(task);
 			Console.WriteLine("Adding..."  + task);
-
-			// add to XML
-			XmlDocument xDoc = new XmlDocument();
-			xDoc.Load(Program.DataDir + "Tasks.xml");
-			XmlElement xRoot = xDoc.DocumentElement;
-			
-			XmlElement NewTask = xDoc.CreateElement("task");
-			
-			// Создаём элементы
-			XmlElement ElemId = xDoc.CreateElement("id");
-			XmlElement ElemTitle = xDoc.CreateElement("title");
-			XmlElement ElemWeight = xDoc.CreateElement("weight");
-			XmlElement ElemParent = xDoc.CreateElement("parent");
-			
-			// Создаём текстовые значения
-			XmlText IdText = xDoc.CreateTextNode(id.ToString());
-			XmlText TitleText = xDoc.CreateTextNode(title);
-			XmlText WeightText = xDoc.CreateTextNode(weight.ToString());
-			XmlText ParentText = xDoc.CreateTextNode(parent.ToString());
-			
-			// Добавляем узлы
-			ElemId.AppendChild(IdText);
-			ElemTitle.AppendChild(TitleText);
-			ElemWeight.AppendChild(WeightText);
-			ElemParent.AppendChild(ParentText);
-			
-			// Добавляем элементы
-			NewTask.AppendChild(ElemId);
-			NewTask.AppendChild(ElemTitle);
-			NewTask.AppendChild(ElemWeight);
-			NewTask.AppendChild(ElemParent);
-			
-			// Добавляем в корень
-			xRoot.AppendChild(NewTask);
-			
-			xDoc.Save("Tasks-mod.xml");
+			allTasks.Add(task);
+			return task;
 		}
 		
-		public static void ChangeTask(List <Task> tasks, int id, string whichParam, object newValue)
+		public static Task ChangeTask(int id, string whichParam, object newValue)
 		{
 			// replace in collection
-			Task t = FindTaskById(tasks, id);
+			Task t = FindTaskById(id);
 			if(t == null)
 			{
 				Console.WriteLine("Not found");
-				return;		// no such task
+				return null;		// no such task
 			}
+			Console.WriteLine("Changing..."  + t);
 			t.GetType().GetProperty(whichParam).SetValue(t, newValue, null);	//TODO: validate reflection result
-			
-			// replace in XML
-			XDocument xDoc = XDocument.Load(Program.DataDir + "Tasks.xml");
-			XElement root = xDoc.Element("tasks");
-			foreach (XElement e in root.Elements("task").ToList())
-			{
-				if (e.Element("id").Value == id.ToString())
-				{
-					Console.WriteLine("Found: " + e.Element(whichParam).Value);
-					e.Element(whichParam).Value = newValue.ToString();
-					Console.WriteLine("Replaced with: " + e.Element(whichParam).Value);
-				}
-				else Console.WriteLine("Not found");
-			}
-			xDoc.Save(Program.DataDir + "Tasks-adj.xml");
+			return t;
 		}
 		
-		public static Task FindTaskById(List <Task> tasks, int id)
+		public static Task FindTaskById(int id)
 		{
-			foreach(Task t in tasks)
+			foreach(Task t in allTasks)
 			{
 				if(t.id == id)
 					return t;
 			}
 			return null;
 		}
-		
 	}
 }

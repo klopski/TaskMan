@@ -35,10 +35,4 @@
     <weight>9</weight>
     <parent>-1</parent>
   </task>
-  <task>
-    <id>6</id>
-    <title>Have fun</title>
-    <weight>10</weight>
-    <parent>-1</parent>
-  </task>
 </tasks>

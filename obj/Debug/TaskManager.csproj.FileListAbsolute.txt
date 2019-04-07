@@ -1,0 +1,8 @@
+C:\Дуглас\C# tests\Task Manager with Git - updated\bin\Debug\TaskManager.exe.config
+C:\Дуглас\C# tests\Task Manager with Git - updated\bin\Debug\TaskManager.exe
+C:\Дуглас\C# tests\Task Manager with Git - updated\bin\Debug\TaskManager.pdb
+C:\Дуглас\C# tests\Task Manager with Git - updated\obj\Debug\TaskManager.csprojResolveAssemblyReference.cache
+C:\Дуглас\C# tests\Task Manager with Git - updated\obj\Debug\TaskManager.MainForm.resources
+C:\Дуглас\C# tests\Task Manager with Git - updated\obj\Debug\TaskManager.csproj.GenerateResource.Cache
+C:\Дуглас\C# tests\Task Manager with Git - updated\obj\Debug\TaskManager.exe
+C:\Дуглас\C# tests\Task Manager with Git - updated\obj\Debug\TaskManager.pdb

@@ -66,7 +66,7 @@ namespace TaskManager
 		void Button1Click(object sender, EventArgs e)
 		{
 			Console.WriteLine("-- Adding Task");
-			Task.AddTask(6, "Have fun", 10, -1);
+			Task.AddTask(3, "Have fun", 10, -1);
 			//Task.WriteTasks("Tasks-adj.xml");		//FIXME:  not saving for now
 			SortAndShow();
 		}
@@ -77,6 +77,13 @@ namespace TaskManager
 			Task.ChangeTask(1, "title", "Alarm Clock");
 			//Task.WriteTasks("Tasks-add.xml");		//FIXME:  not saving for now
 			SortAndShow();
+		}
+		
+		void Button3Click(object sender, EventArgs e)
+		{
+			Console.WriteLine("-- Re-Sorting...");
+			SortAndShow();
+			// TODO: Implement Button3Click
 		}
 	}
 }

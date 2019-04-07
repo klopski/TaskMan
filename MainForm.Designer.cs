@@ -50,18 +50,19 @@ namespace TaskManager
 			this.colParent = new System.Windows.Forms.ColumnHeader();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// listView1
 			// 
 			this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
+									| System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
 			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.colID,
-			this.colTitle,
-			this.colWeight,
-			this.colParent});
+									this.colID,
+									this.colTitle,
+									this.colWeight,
+									this.colParent});
 			this.listView1.FullRowSelect = true;
 			this.listView1.Location = new System.Drawing.Point(12, 42);
 			this.listView1.Name = "listView1";
@@ -107,18 +108,29 @@ namespace TaskManager
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.Button2Click);
 			// 
+			// button3
+			// 
+			this.button3.Location = new System.Drawing.Point(175, 13);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(75, 23);
+			this.button3.TabIndex = 3;
+			this.button3.Text = "Sort";
+			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.Button3Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(284, 261);
+			this.Controls.Add(this.button3);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.listView1);
 			this.Name = "MainForm";
 			this.Text = "Klop Task Manager";
 			this.ResumeLayout(false);
-
 		}
+		private System.Windows.Forms.Button button3;
 	}
 }
